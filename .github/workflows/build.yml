@@ -1,0 +1,53 @@
+name: Build
+on:
+   push:
+      branches:
+         - master
+   pull_request:
+      branches:
+         - master
+
+jobs:
+   build:
+      runs-on: ubuntu-latest
+      strategy:
+         matrix:
+            node-version: [15.x]
+
+      steps:
+         - uses: actions/checkout@v1
+
+         - name: Cache node modules
+           id: npm-cache
+           uses: actions/cache@v2
+           with:
+              path: |
+                ~/.npm
+                ionic-app/node_modules
+              key: ${{ runner.os }}-node-${{ hashFiles('**/pnpm-lock.yaml') }}
+              restore-keys: |
+                 ${{ runner.os }}-node-
+
+         - name: Setup Node ${{ matrix.node-version }}
+           uses: actions/setup-node@v1
+           with:
+              node-version: ${{ matrix.node-version }}
+
+         - name: Install dependencies (npm install)
+           working-directory: ./ionic-app
+           run: |
+              npm install
+
+         - name: Lint
+           working-directory: ./ionic-app
+           run: npm run lint
+
+         - name: npm run build:ci
+           working-directory: ./ionic-app
+           run: |
+              npm run build:ci
+
+         - name: test
+           working-directory: ./ionic-app
+           run: |
+             npm run test-headless

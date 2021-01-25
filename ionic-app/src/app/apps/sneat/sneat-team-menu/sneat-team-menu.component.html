@@ -1,0 +1,135 @@
+<div class="ion-padding" *ngIf="!fbUser">
+	<p>Why to use DailyScrum.app</p>
+	<ul>
+		<li>Mobile friendly</li>
+		<li>Open source</li>
+	</ul>
+</div>
+<ion-list *ngIf="fbUser">
+
+	<!--					<ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">-->
+	<!--						<ion-item [routerDirection]="'root'" [routerLink]="[p.url]">-->
+	<!--							<ion-icon slot="start" [name]="p.icon"></ion-icon>-->
+	<!--							<ion-label>{{p.title}}</ion-label>-->
+	<!--						</ion-item>-->
+	<!--					</ion-menu-toggle>-->
+
+	<!--					<ion-item>-->
+	<!--						<ion-icon name="albums-outline" slot="start"></ion-icon>-->
+	<!--						<ion-label class="menu-group" color="medium">Apps</ion-label>-->
+	<!--					</ion-item>-->
+	<!--					<ion-item class="menu-sub-item">-->
+	<!--						<ion-icon name="timer-outline" slot="start"></ion-icon>-->
+	<!--						<ion-label>Daily scrum</ion-label>-->
+	<!--						<ion-buttons slot="end">-->
+	<!--							<ion-button><ion-icon name="close-outline" color="medium"></ion-icon></ion-button>-->
+	<!--						</ion-buttons>-->
+	<!--					</ion-item>-->
+	<!--					<ion-item class="menu-sub-item">-->
+	<!--						<ion-icon name="glasses-outline" slot="start"></ion-icon>-->
+	<!--						<ion-label>Retrospective</ion-label>-->
+	<!--						<ion-buttons slot="end">-->
+	<!--							<ion-button><ion-icon name="close-outline" color="medium"></ion-icon></ion-button>-->
+	<!--						</ion-buttons>-->
+	<!--					</ion-item>-->
+
+	<!--					<ion-item class="menu-sub-item">-->
+	<!--						<ion-icon name="people-outline" slot="start"></ion-icon>-->
+	<!--						<ion-label>Meetings</ion-label>-->
+	<!--						<ion-buttons slot="end">-->
+	<!--							<ion-button><ion-icon name="close-outline" color="medium"></ion-icon></ion-button>-->
+	<!--						</ion-buttons>-->
+	<!--					</ion-item> -->
+
+
+	<ion-item-group>
+		<ion-menu-toggle auto-hide="false">
+			<ion-item-divider (click)="navService.navigateToTeams()" tappable>
+				<ion-label [color]="currentPage === 'teams' && 'tertiary'" slot="start" name="home" class="menu-group">Teams
+				</ion-label>
+			</ion-item-divider>
+		</ion-menu-toggle>
+
+		<ion-menu-toggle auto-hide="false" *ngIf="user">
+			<ion-item *ngFor="let team of teams; trackBy: itemId" tappable detail (click)="goTeam(team)"
+						 class="menu-sub-item">
+				<ion-icon [color]="team.id === currentTeamId && 'tertiary'" name="people-outline"
+							 slot="start"></ion-icon>
+				<ion-label>{{team.title}}</ion-label>
+			</ion-item>
+		</ion-menu-toggle>
+	</ion-item-group>
+
+	<ion-item-group>
+		<ion-item-divider>
+			<ion-label>Apps</ion-label>
+		</ion-item-divider>
+
+		<ion-item (click)="goDataTug()" detail tappable>
+			<ion-icon slot="start" name="person"></ion-icon>
+			<ion-label>DataTug</ion-label>
+		</ion-item>
+	</ion-item-group>
+
+	<ion-item-group>
+		<ion-item-divider>Signed in as</ion-item-divider>
+		<ion-item *ngIf="user" (click)="navService.navigateToUserProfile()" detail tappable>
+			<ion-icon [color]="currentPage === 'user-profile' && 'tertiary'" slot="start"
+						 name="person"></ion-icon>
+			<ion-label style="font-weight: bold">{{user.title || user.email}}</ion-label>
+		</ion-item>
+		<ion-item (click)="signOut()" tappable>
+			<ion-icon slot="start" name="log-out"></ion-icon>
+			<ion-label color="medium">Sign out</ion-label>
+		</ion-item>
+	</ion-item-group>
+</ion-list>
+<ion-card>
+	<ion-card-header>
+		<ion-card-title color="medium">We are Free & Open Source!</ion-card-title>
+	</ion-card-header>
+	<ion-card-content>
+		<!--						<iframe *ngIf="!showAbout" style="border: 0; overflow: hidden; float: right" width="90x" height="20px"-->
+		<!--								  src="https://ghbtns.com/github-btn.html?user=sneat-team&repo=dailyscrum-pwa&type=star&count=true"-->
+		<!--						></iframe>-->
+		<p>Do you like this app? Give us a star!</p>
+
+		<ion-button color="medium" *ngIf="!showAbout" fill="outline" size="small" (click)="showAbout = true">
+			Learn more
+		</ion-button>
+
+		<ng-container *ngIf="showAbout">
+			<ul style="padding-left: 0; list-style: none">
+				<li>
+					<iframe style="border: 0; overflow: hidden; float: right" width="120px" height="20px"
+							  src="https://ghbtns.com/github-btn.html?user=sneat-team&repo=dailyscrum-pwa&type=star&count=true"
+					></iframe>
+					<a target="_blank" href="https://github.com/sneat-team/dailyscrum-pwa"><b>Frontend</b></a>
+					<p style="font-size: smaller">
+						Powered by <a target="_blank" href="https://ionicframework.com/">Ionic</a> &amp; <a
+						target="_blank"
+						href="https://angular.io/">Angular</a>
+					</p>
+				</li>
+				<li class="ion-margin-top">
+					<iframe style="border: 0; overflow: hidden; float: right" width="120px" height="20px"
+							  src="https://ghbtns.com/github-btn.html?user=sneat-team&repo=sneat-team-go&type=star&count=true"
+					></iframe>
+					<a target="_blank" href="https://github.com/sneat-team/dailyscrum-pwa"><b>Backend</b></a>
+					<p style="font-size: smaller">
+						Powered by <a target="_blank" href="https://golang.org/">Go language</a> &amp; <a
+						target="_blank" href="https://firebase.google.com/">Firebase</a>
+					</p>
+				</li>
+			</ul>
+
+			<p style="margin-bottom: 0.5em">Contributors wanted!</p>
+
+			<iframe src="https://ghbtns.com/github-btn.html?user=sneat-team&type=follow&count=true"
+					  style="border: 0; overflow: hidden" width="220px" height="20px"></iframe>
+		</ng-container>
+	</ion-card-content>
+</ion-card>
+<div class="ion-padding">
+	2020 &copy; <a href="https://dailyscrum.app">DailyScrum.app</a>
+</div>

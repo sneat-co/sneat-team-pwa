@@ -1,0 +1,29 @@
+<ion-header>
+	<ion-toolbar>
+		<ion-title>Sign in to DailyScrum.app</ion-title>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content class="cards">
+
+	<ion-card>
+		<ion-card-content>
+			<ion-card-header>
+				<ion-card-subtitle>Please confirm your email</ion-card-subtitle>
+			</ion-card-header>
+			<ion-item>
+				<ion-label>Email</ion-label>
+				<ion-input [(ngModel)]="email" required email [disabled]="isSigning"></ion-input>
+			</ion-item>
+		</ion-card-content>
+		<ion-card-content>
+			<ion-button (click)="signInWithEmail()" [disabled]="isSigning">
+				<ion-label *ngIf="!isSigning">Sign in</ion-label>
+				<ion-spinner name="lines-small" slot="start" *ngIf="isSigning" style="margin-right: 1em"></ion-spinner>
+				<ion-label *ngIf="isSigning">Signing in...</ion-label>
+			</ion-button>
+			<ion-button (click)="goLogin()" color="medium" fill="outline" *ngIf="!isSigning">Go to login page</ion-button>
+		</ion-card-content>
+	</ion-card>
+
+</ion-content>

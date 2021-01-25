@@ -1,0 +1,23 @@
+<ion-app>
+	<ion-split-pane contentId="main-content">
+		<ion-menu contentId="main-content" type="overlay" [ngSwitch]="(appContext.currentApp|async).appCode">
+			<ion-header>
+				<ion-toolbar color="light">
+					<ion-title>
+						<span>
+							<span *ngSwitchCase="sneatTeam">Sneat.team</span>
+							<span *ngSwitchDefault>Unknown app: {{(appContext.currentApp|async).appCode}}</span>
+						</span>
+					</ion-title>
+				</ion-toolbar>
+			</ion-header>
+			<ion-content class="cards">
+				<app-sneat-team-menu *ngSwitchCase="'sneat'"></app-sneat-team-menu>
+				<div *ngSwitchDefault>
+					Unknown app: {{appContext.currentApp|async}}
+				</div>
+			</ion-content>
+		</ion-menu>
+		<ion-router-outlet id="main-content"></ion-router-outlet>
+	</ion-split-pane>
+</ion-app>
